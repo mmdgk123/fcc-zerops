@@ -12,6 +12,9 @@ fi
 if [ -n "$MODEL" ] && ! grep -q "^MODEL=" "$HOME/.fcc/.env" 2>/dev/null; then
   printf 'MODEL=%s\n' "$MODEL" >> "$HOME/.fcc/.env"
 fi
+if [ -n "$OPENCODE_API_KEY" ] && ! grep -q "^OPENCODE_API_KEY=" "$HOME/.fcc/.env" 2>/dev/null; then
+  printf 'OPENCODE_API_KEY=%s\n' "$OPENCODE_API_KEY" >> "$HOME/.fcc/.env"
+fi
 export PYTHONPATH="/var/www/vendor:${PYTHONPATH:-}"
 export PATH="/var/www/vendor/bin:$HOME/.fccvendor/bin:${PATH}"
 if ! command -v fcc-server >/dev/null 2>&1; then
