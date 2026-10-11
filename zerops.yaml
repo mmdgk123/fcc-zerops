@@ -3,13 +3,14 @@ zerops:
     build:
       base: python@3.14
       buildCommands:
-        - pip install --prefix=./pfx free-claude-code
+        - curl -LsSf https://astral.sh/uv/install.sh | sh
+        - export PATH="$HOME/.local/bin:$PATH"
+        - uv sync --python 3.14 --no-dev 2>/dev/null || uv pip install --target=./vendor --system free-claude-code
+        - ls ./vendor/bin 2>/dev/null || ls ./.venv/bin 2>/dev/null | head
         - chmod +x ./start.sh
       deployFiles:
-        - ./pfx
+        - ./vendor
         - ./start.sh
-      cache:
-        - ./pfx
     run:
       base: python@3.14
       ports:
