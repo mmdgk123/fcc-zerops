@@ -3,14 +3,13 @@ zerops:
     build:
       base: python@3.14
       buildCommands:
-        - curl -LsSf https://astral.sh/uv/install.sh | sh
-        - export PATH="$HOME/.local/bin:$PATH"
-        - uv sync --python 3.14 --no-dev 2>/dev/null || uv pip install --target=./vendor --system free-claude-code
-        - ls ./vendor/bin 2>/dev/null || ls ./.venv/bin 2>/dev/null | head
+        - pip install --target=./vendor --ignore-requires-python free-claude-code
         - chmod +x ./start.sh
       deployFiles:
         - ./vendor
         - ./start.sh
+      cache:
+        - vendor
     run:
       base: python@3.14
       ports:
@@ -19,5 +18,6 @@ zerops:
       envVariables:
         HOST: 0.0.0.0
         PORT: 8082
+        PYTHONPATH: /var/www/vendor
         FCC_OPEN_BROWSER: "false"
       start: bash ./start.sh
