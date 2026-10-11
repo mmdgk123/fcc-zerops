@@ -3,12 +3,13 @@ zerops:
     build:
       base: python@3.14
       buildCommands:
-        - pip install --prefix=/var/www/.local free-claude-code
+        - pip install --prefix=./pfx free-claude-code
         - chmod +x ./start.sh
       deployFiles:
+        - ./pfx
         - ./start.sh
       cache:
-        - /var/www/.local
+        - ./pfx
     run:
       base: python@3.14
       ports:
