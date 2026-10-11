@@ -1,0 +1,23 @@
+zerops:
+  - setup: fcc
+    build:
+      base: python@3.14
+      buildCommands:
+        - pip install --target=./vendor --ignore-requires-python free-claude-code
+        - chmod +x ./start.sh
+      deployFiles:
+        - ./vendor
+        - ./start.sh
+      cache:
+        - vendor
+    run:
+      base: python@3.14
+      ports:
+        - port: 8082
+          httpSupport: true
+      envVariables:
+        HOST: 0.0.0.0
+        PORT: 8082
+        PYTHONPATH: /var/www/vendor
+        FCC_OPEN_BROWSER: "false"
+      start: bash ./start.sh
